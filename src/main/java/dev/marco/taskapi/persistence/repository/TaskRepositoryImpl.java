@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import dev.marco.taskapi.domain.exception.ResourceNotFoundException;
 import dev.marco.taskapi.domain.model.Task;
 import dev.marco.taskapi.domain.repository.TaskRepository;
 import dev.marco.taskapi.persistence.entity.TaskEntity;
@@ -40,12 +39,6 @@ public class TaskRepositoryImpl implements TaskRepository {
 	@Override
 	public void deleteById(Long id) {
 	    taskJpaRepository.deleteById(id);
-	}
-
-	@Override
-	public Task update(Task task, Long id) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

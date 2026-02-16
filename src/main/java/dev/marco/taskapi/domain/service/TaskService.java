@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import dev.marco.taskapi.domain.exception.ResourceNotFoundException;
 import dev.marco.taskapi.domain.model.Task;
 import dev.marco.taskapi.domain.repository.TaskRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -35,8 +36,10 @@ public class TaskService {
 
 		taskRepository.deleteById(existingTask.id());
 	}
-
-	public Task updateTask(Task task, Long id) {
+	
+	
+	@Transactional
+	public Task updateTask(Long id, Task task) {
 
 	    Task existingTask = taskRepository.findById(id)
 	            .orElseThrow(() ->

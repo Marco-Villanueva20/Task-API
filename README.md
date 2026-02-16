@@ -23,3 +23,47 @@ git clone https://github.com/Marco-Villanueva20/Task-API.git
 mvn spring-boot:run
 
 ```
+## Database h2
+
+```md
+## H2 Console
+
+URL: http://localhost:8080/h2-console  
+JDBC URL: jdbc:h2:mem:testdb  
+Username: sa  
+Password: (empty)
+
+
+
+## Endpoints
+
+### Get all tasks
+GET /tasks
+
+### Get task by id
+GET /tasks/{id}
+
+### Create task
+POST /tasks
+
+Body:
+{
+  "title": "Learn Spring",
+  "description": "Study clean architecture"
+}
+
+### Update task
+PUT /tasks/{id}
+
+### Delete task
+DELETE /tasks/{id}
+
+
+
+## Architecture
+
+This project follows Clean Architecture:
+
+- domain → business logic
+- persistence → database implementation
+- controller → REST layer
