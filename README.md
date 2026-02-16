@@ -28,10 +28,10 @@ mvn spring-boot:run
 ```md
 ## H2 Console
 
-URL: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)  
-JDBC URL: jdbc:h2:mem:mydb  
-Username: sa  
-Password: (empty)
+- **URL:** [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+- **JDBC URL:** `jdbc:h2:mem:mydb`
+- **Username:** `sa`
+- **Password:** *(empty)*
 
 
 
