@@ -14,7 +14,7 @@ Built with Spring Boot and Clean Arquitecture principles.
 ## How to run
 1. Clone repository
 ```git
-git clone 
+git clone https://github.com/Marco-Villanueva20/Task-API.git
 
 ```
 2. Run:
