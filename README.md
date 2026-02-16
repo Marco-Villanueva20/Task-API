@@ -25,14 +25,17 @@ mvn spring-boot:run
 ```
 ## Database h2
 
-```md
+
 ## H2 Console
 
+```md
 - **URL:** [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
 - **JDBC URL:** `jdbc:h2:mem:mydb`
 - **Username:** `sa`
 - **Password:** *(empty)*
 
+```
+ 
 
 
 ## Endpoints
