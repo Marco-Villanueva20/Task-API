@@ -8,6 +8,7 @@ Built with Spring Boot and Clean Arquitecture principles.
 - Maven
 - Spring Boot
 - Spring Data JPA
+- Spring Doc
 - H2 Database
 - Lombok
 
@@ -34,6 +35,15 @@ mvn spring-boot:run
 
 ## Endpoints
 
+Visibles en la ruta
+- **URL:** [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+
+
+
+<!-- ![Imagen que muestra la interfaz generada por swagger](src/main/resources/static/image/swagger-screenshot.png) -->
+
+<img src="src/main/resources/static/image/swagger-screenshot.png" alt="Imagen que muestra la interfaz generada por swagger" width="600" />
+ 
 ### Get all tasks
 GET /tasks
 
