@@ -1,4 +1,4 @@
-package dev.marco.taskapi.persistence.repository;
+package dev.marco.taskapi.persistence.repository.task;
 
 import java.util.List;
 import java.util.Optional;

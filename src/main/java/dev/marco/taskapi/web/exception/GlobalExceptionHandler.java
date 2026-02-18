@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,6 +24,14 @@ public class GlobalExceptionHandler {
 		return problemDetails;
 	}
 	
+	
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ProblemDetail handleReadableException(HttpMessageNotReadableException ex) {
+	    ProblemDetail problemDetails = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+	    problemDetails.setTitle("Cuerpo de petición ausente");
+	    problemDetails.setDetail("No se ha proporcionado un cuerpo de petición (JSON) o el formato es inválido.");
+	    return problemDetails;
+	}
 	
 	@ExceptionHandler(Exception.class)
 	public ProblemDetail handleGenericException(Exception ex) {

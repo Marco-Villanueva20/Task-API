@@ -16,9 +16,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import dev.marco.taskapi.domain.model.Task;
 import dev.marco.taskapi.domain.service.TaskService;
-import dev.marco.taskapi.web.TaskWebMapper;
 import dev.marco.taskapi.web.dto.TaskRequest;
 import dev.marco.taskapi.web.dto.TaskResponse;
+import dev.marco.taskapi.web.mapper.TaskWebMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,7 +40,9 @@ public class TaskController {
 	}
 
 	@PostMapping
-	public ResponseEntity<TaskResponse> createTask(@RequestBody TaskRequest request, UriComponentsBuilder ucb) {
+	public ResponseEntity<TaskResponse> createTask(
+			
+			@Valid @RequestBody TaskRequest request, UriComponentsBuilder ucb) {
 		
 		Task task = taskService.createTask(taskWebMapper.toDomain(request));
 		URI location = ucb.cloneBuilder().path("/api/tasks/{id}").buildAndExpand(task.id()).toUri();

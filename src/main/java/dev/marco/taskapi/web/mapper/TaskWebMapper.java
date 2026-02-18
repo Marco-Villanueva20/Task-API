@@ -1,4 +1,4 @@
-package dev.marco.taskapi.web;
+package dev.marco.taskapi.web.mapper;
 
 import org.springframework.stereotype.Component;
 
