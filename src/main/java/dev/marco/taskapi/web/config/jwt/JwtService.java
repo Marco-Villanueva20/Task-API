@@ -90,18 +90,6 @@ public class JwtService implements TokenProvider {
 		}
 	}
 	
-	public boolean isTokenSignatureValid(String token) {
-	    try {
-	        Jwts.parser()
-	            .verifyWith(signingKey)
-	            .build()
-	            .parseSignedClaims(token);
-	        return true;
-	    } catch (JwtException | IllegalArgumentException e) {
-	        logger.error("Firma o estructura de JWT inválida: {}", e.getMessage());
-	        return false;
-	    }
-	}
 
 	private boolean isTokenExpired(String token) {
 		return extractClaim(token, Claims::getExpiration).before(new Date());

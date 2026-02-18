@@ -74,3 +74,44 @@ This project follows Clean Architecture:
 - domain → business logic
 - persistence → database implementation
 - controller → REST layer
+
+
+
+## Architecture Spring Security
+
+This project follows Architecture Spring Security
+
+<img src="src/main/resources/static/image/architecture-spring-security.png" alt="Imagen que muestra la arquitectura de spring security" width="600">
+
+
+1. HTTP Request:
+   El cliente realiza una petición a un endpoint (protegido o no) y la solicitud entra en la cadena de filtros de Spring Security.
+
+2. JwtAuthenticationFilter:
+   La petición es interceptada por un filtro personalizado que extiende OncePerRequestFilter.
+
+   2.1 Extracción:
+       Se lee el header Authorization. Si comienza con "Bearer ", se extrae el JWT eliminando ese prefijo.
+       Si no hay token o el formato es inválido, el request continúa sin autenticación.
+
+   2.2 Validación de Firma:
+       El JwtService verifica la firma del token usando la SECRET_KEY para asegurar que no fue modificado.
+
+   2.3 Extracción de Claims:
+       Si la firma es válida, se extrae el username y la fecha de expiración del token.
+
+   2.4 Carga de Identidad:
+       Se llama a UserDetailsService.loadUserByUsername(username) para obtener el estado actual del usuario desde la base de datos.
+
+   2.5 Validación Final:
+       Se verifica que el token no esté expirado y que coincida con el usuario recuperado.
+
+3. Security Context:
+   Si todo es válido y no existe ya una autenticación en el contexto,
+   se crea un UsernamePasswordAuthenticationToken (sin contraseña),
+   se marcan sus authorities y se guarda en el SecurityContextHolder.
+
+4. Acceso a endpoints:
+   Cuando la petición llega al controlador, Spring Security consulta el SecurityContext.
+   Si el usuario está autenticado y tiene permisos suficientes, se permite el acceso.
+   En caso contrario, se responde con 401 o 403.
