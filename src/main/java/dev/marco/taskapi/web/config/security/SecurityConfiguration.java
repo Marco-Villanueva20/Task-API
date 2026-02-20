@@ -33,14 +33,17 @@ public class SecurityConfiguration {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
+		.headers(headers -> headers.frameOptions(frame -> frame.disable()))
 		.csrf(AbstractHttpConfigurer::disable)
-		.cors(AbstractHttpConfigurer::disable)
-				.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler) // Manejo de 401 personalizado
-				).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) 
-				).authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll() 
+				.cors(AbstractHttpConfigurer::disable)
+				.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler) // Manejo de 401
+																										// personalizado
+				).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll()
+						.requestMatchers("/v3/api-docs/**").permitAll().requestMatchers("/swagger-ui/**").permitAll()
+						.requestMatchers("/swagger-ui.html").permitAll().requestMatchers("/h2-console/**").permitAll()
 						.requestMatchers("/api/public/**").permitAll().anyRequest().authenticated());
 
-		
 		http.authenticationProvider(authenticationProvider(userDetailsService, passwordEncoder()));
 		http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -48,8 +51,7 @@ public class SecurityConfiguration {
 	}
 
 	@Bean
-	public DaoAuthenticationProvider authenticationProvider(
-			UserDetailsService userDetailsService,
+	public DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService,
 			PasswordEncoder passwordEncoder) {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
 
@@ -59,12 +61,12 @@ public class SecurityConfiguration {
 	}
 
 	@Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+		return config.getAuthenticationManager();
+	}
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }

@@ -39,14 +39,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	        String jwt = parseJwt(request);
 
 	        if (jwt != null) {
-	            // Si la firma es falsa o expiró, extractUsername lanzará JwtException
+	            // Si la firma es falsa o expiro, extractUsername lanzara JwtException
 	            String username = jwtService.extractUsername(jwt);
 
 	            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 	                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-	                // 2. Aquí ya solo validamos que el usuario no haya sido deshabilitado
-	                // o que el token no haya expirado (aunque extractUsername suele captar la expiración)
+	                // 2. Aqui  solo valida que el usuario no haya sido deshabilitado
+	                // o que el token no haya expirado
 	                if (jwtService.isTokenValid(jwt, userDetails)) {
 	                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
 	                            userDetails, null, userDetails.getAuthorities());
@@ -57,7 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	            }
 	        }
 	    } catch (Exception e) {
-	        // Si el token era inválido, llegará aquí. Logueamos y seguimos.
+	        // Si el token era invalido, llegara aqui. Logueamos y seguimos.
 	        log.error("Fallo la autenticación: {}", e.getMessage());
 	    }
 	    filterChain.doFilter(request, response);

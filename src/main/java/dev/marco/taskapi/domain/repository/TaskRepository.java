@@ -7,13 +7,15 @@ import dev.marco.taskapi.domain.model.Task;
 
 public interface TaskRepository {
 
-	List<Task> findAll();
+	List<Task> findAll(Long userId);
 
-	Optional<Task> findById(Long id);
+	Optional<Task> findByIdAndUserId(Long id, Long userId);
 
 	Task save(Task task);
 
-	void deleteById(Long id);
+	void deleteByIdAndUserId(Long id, Long userId);
+
+	//Task save(Task task, Principal principal);
 	
 	//Task update(Task task, Long id);
 }

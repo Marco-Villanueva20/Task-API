@@ -10,10 +10,10 @@ import dev.marco.taskapi.web.dto.TaskResponse;
 public record TaskWebMapper() {
 
 	public TaskResponse toResponse(Task task) {
-		return new TaskResponse(task.id(), task.title(), task.description());
+		return new TaskResponse(task.getId(), task.getTitle(), task.getDescription());
 	}
 
 	public Task toDomain(TaskRequest request) {
-		return new Task(null, request.title(), request.description());
+		return new Task(null, request.title(), request.description(), null);
 	}
 }

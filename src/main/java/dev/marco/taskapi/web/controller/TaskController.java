@@ -1,6 +1,7 @@
 package dev.marco.taskapi.web.controller;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -33,32 +34,36 @@ public class TaskController {
 	private final TaskWebMapper taskWebMapper;
 
 	@GetMapping
-	public ResponseEntity<List<TaskResponse>> getAllTasks() {
+	public ResponseEntity<List<TaskResponse>> getAllTasks(Principal principal) {
+
 		log.info("Getting all tasks");
-		List<TaskResponse> responses = taskService.getAllTasks().stream().map(taskModel -> taskWebMapper.toResponse(taskModel)).toList();
+		List<TaskResponse> responses = taskService.getAllTasks(principal.getName()).stream()
+				.map(taskModel -> taskWebMapper.toResponse(taskModel)).toList();
 		return ResponseEntity.ok(responses);
 	}
 
 	@PostMapping
 	public ResponseEntity<TaskResponse> createTask(
-			
-			@Valid @RequestBody TaskRequest request, UriComponentsBuilder ucb) {
-		
-		Task task = taskService.createTask(taskWebMapper.toDomain(request));
-		URI location = ucb.cloneBuilder().path("/api/tasks/{id}").buildAndExpand(task.id()).toUri();
+
+			@Valid @RequestBody TaskRequest request, UriComponentsBuilder ucb, Principal principal) {
+		String username = principal.getName();
+		Task task = taskService.createTask(taskWebMapper.toDomain(request), username);
+		URI location = ucb.cloneBuilder().path("/api/tasks/{id}").buildAndExpand(task.getId()).toUri();
 		return ResponseEntity.created(location).body(taskWebMapper.toResponse(task));
 	}
-	
+
 	@PutMapping("/{id}")
-	public ResponseEntity<TaskResponse> updateTask(@RequestBody TaskRequest request, @PathVariable Long id){
+	public ResponseEntity<TaskResponse> updateTask(@RequestBody TaskRequest request, @PathVariable Long id,
+			Principal principal) {
+		String username = principal.getName();
 		Task taskDomain = taskWebMapper.toDomain(request);
-		Task updatedTask = taskService.updateTask(id, taskDomain);
+		Task updatedTask = taskService.updateTask(id, taskDomain, username);
 		return ResponseEntity.ok(taskWebMapper.toResponse(updatedTask));
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteTaskById(@PathVariable Long id) {
-		taskService.deleteTaskById(id);
+	public ResponseEntity<Void> deleteTaskById(@PathVariable Long id, Principal principal) {
+		taskService.deleteTaskById(id, principal.getName());
 		return ResponseEntity.noContent().build();
 	}
 }

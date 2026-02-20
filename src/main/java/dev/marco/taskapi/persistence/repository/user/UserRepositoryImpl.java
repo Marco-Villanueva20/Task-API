@@ -1,5 +1,7 @@
 package dev.marco.taskapi.persistence.repository.user;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Repository;
 
 import dev.marco.taskapi.domain.model.User;
@@ -22,5 +24,12 @@ public class UserRepositoryImpl implements UserRepository {
 		UserEntity savedEntity = userJpaRepository.save(userEntity);
 		return userMapper.toDomain(savedEntity);
 	}
+
+	@Override
+	public Optional<User> findByUsername(String username) {
+		return userJpaRepository.findByUsername(username)
+				.map(userMapper::toDomain);
+	}
+	
 
 }

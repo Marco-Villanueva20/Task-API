@@ -36,6 +36,14 @@
 		  <artifactId>jjwt-api</artifactId>
 		  <version>0.12.5</version>
 		</dependency>
+		
+		<!-- Source: https://mvnrepository.com/artifact/org.springframework.security/spring-security-data -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-data</artifactId>
+		</dependency>
+		
+		
 		<dependency>
 		  <groupId>io.jsonwebtoken</groupId>
 		  <artifactId>jjwt-impl</artifactId>
